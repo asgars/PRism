@@ -1,0 +1,70 @@
+{
+  "name": "prism-review",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A focused Azure DevOps pull request review workspace",
+  "author": "Prism",
+  "type": "module",
+  "main": "out/main/index.js",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "npm run typecheck && electron-vite build",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:desktop": "npm run build && node tests/desktop.smoke.mjs",
+    "dist:win": "npm run build && electron-builder --win nsis --x64",
+    "pack:win": "npm run build && electron-builder --win --dir --x64"
+  },
+  "dependencies": {
+    "@azure/msal-node": "latest",
+    "@fontsource-variable/jetbrains-mono": "latest",
+    "@fontsource-variable/manrope": "latest",
+    "@github/copilot-sdk": "latest",
+    "diff": "latest",
+    "lucide-react": "latest",
+    "minimatch": "11.0.4",
+    "react": "latest",
+    "react-dom": "latest",
+    "yaml": "2.9.1",
+    "zod": "latest"
+  },
+  "devDependencies": {
+    "@playwright/test": "latest",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "@vitejs/plugin-react": "latest",
+    "electron": "42.11.18",
+    "electron-builder": "latest",
+    "electron-vite": "latest",
+    "typescript": "latest",
+    "vite": "latest",
+    "vitest": "latest"
+  },
+  "build": {
+    "npmRebuild": false,
+    "appId": "com.prism.review",
+    "productName": "Prism",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "assets/**/*",
+      "out/**/*",
+      "package.json"
+    ],
+    "asarUnpack": [
+      "node_modules/@github/**/*"
+    ],
+    "win": {
+      "icon": "assets/icon.ico",
+      "target": "nsis",
+      "artifactName": "Prism-Setup-${version}-${arch}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}
